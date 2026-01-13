@@ -1,0 +1,15 @@
+.notesButton {
+  padding: 0.5rem 1rem;
+  background: var(--с-primary);
+  background-color: var(--с-primary);
+  border: none;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+  color: var(--c-on-primary);
+  display: inline-block;
+}
+
+.notesButton:hover {
+  background: var(--с-secondary);
+  background-color: var(--с-secondary);
+}
