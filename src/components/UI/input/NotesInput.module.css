@@ -1,16 +1,18 @@
-.notesButton {
-  padding: 0.5rem 1rem;
+.notesInput {
   background: var(--c-primary);
   background-color: var(--c-primary);
-  border: none;
-  border-radius: 0.5rem;
-  transition: background-color 0.3s ease;
   color: var(--c-on-primary);
-  display: inline-block;
+  transition: background-color 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
   border: 3px solid var(--c-primary);
 }
 
-.notesButton:hover {
+.notesInput:focus {
   background: var(--c-secondary);
   background-color: var(--c-secondary);
+}
+
+.notesInput::placeholder {
+  color: var(--c-on-primary);
 }
