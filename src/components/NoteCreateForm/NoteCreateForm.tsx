@@ -1,5 +1,6 @@
 import NotesButton from "../UI/button/NotesButton";
 import NotesInput from "../UI/input/NotesInput";
+import classes from "./NoteCreateForm.module.css";
 
 type NoteCreateFormProps = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -10,7 +11,7 @@ type NoteCreateFormProps = {
 
 const NoteCreateForm = ({ onSubmit, onChange, value }: NoteCreateFormProps) => {
   return (
-    <form onSubmit={onSubmit}>
+    <form className={classes.noteCreateForm} onSubmit={onSubmit}>
       <NotesInput
         value={value.title}
         onChange={(e) => onChange("title", e.target.value)}
@@ -21,7 +22,9 @@ const NoteCreateForm = ({ onSubmit, onChange, value }: NoteCreateFormProps) => {
         onChange={(e) => onChange("description", e.target.value)}
         placeholder="description"
       />
-      <NotesButton type="submit">Add note</NotesButton>
+      <NotesButton className={classes.formSubmitBtn} type="submit">
+        Add note
+      </NotesButton>
     </form>
   );
 };

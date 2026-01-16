@@ -36,7 +36,11 @@ const NotesPage = () => {
   };
 
   return (
-    <div>
+    <div
+      // temporary hack
+      // need to remove inline styling later
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <NotesButton onClick={() => setIsAuth(false)}>Logout</NotesButton>
       <NoteCreateForm
         value={newNoteData}

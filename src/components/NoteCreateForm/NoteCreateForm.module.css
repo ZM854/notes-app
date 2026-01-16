@@ -1,0 +1,13 @@
+.noteCreateForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--c-surface);
+  padding: 3rem 2rem;
+  border-radius: 0.5rem;
+  border: var(--card-border);
+}
+
+.formSubmitBtn {
+  margin-top: 0.5rem;
+}
