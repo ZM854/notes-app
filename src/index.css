@@ -13,6 +13,7 @@
 
   --font-title-hero: 3rem;
   --font-title: 2rem;
+  --font-note-title: 1.5rem;
   --font-paragraph: 1rem;
 
   --font-weight-title: 600;
@@ -20,6 +21,8 @@
   --font-weight-paragraph: 400;
 
   --font-main: "Inter", system-ui, -apple-system, sans-serif;
+
+  --card-border: 3px solid var(--c-primary);
 }
 
 * {

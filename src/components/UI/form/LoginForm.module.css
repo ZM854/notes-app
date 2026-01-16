@@ -5,7 +5,7 @@
   background: var(--c-surface);
   padding: 3rem 2rem;
   border-radius: 0.5rem;
-  border: 3px solid var(--c-primary);
+  border: var(--card-border);
 }
 
 .submitBtn {

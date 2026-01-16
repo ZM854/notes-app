@@ -1,6 +1,6 @@
-import type { NoteType } from "../types/NoteType";
-import Note from "./Note";
-
+import type { NoteType } from "../../types/NoteType";
+import Note from "../Note/Note";
+import classes from "./NoteList.module.css";
 type NoteListProps = { notes: NoteType[] };
 
 const NoteList = ({ notes }: NoteListProps) => {
@@ -9,7 +9,7 @@ const NoteList = ({ notes }: NoteListProps) => {
   }
 
   return (
-    <div>
+    <div className={classes.notesList}>
       {notes.map((note) => {
         return <Note key={note.id} note={note} />;
       })}

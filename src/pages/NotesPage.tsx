@@ -3,15 +3,15 @@ import NotesButton from "../components/UI/button/NotesButton";
 import NotesInput from "../components/UI/input/NotesInput";
 import { useAuth } from "../hooks/UseAuth";
 import type { NoteType } from "../types/NoteType";
-import NoteList from "../components/NoteList";
+import NoteList from "../components/NoteList/NoteList";
 
 const NotesPage = () => {
   const { setIsAuth } = useAuth();
 
   const [notes, setNotes] = useState<NoteType[]>([
-    { id: 1, title: "aboba", description: "biba" },
-    { id: 2, title: "aboba", description: "biba" },
-    { id: 3, title: "aboba", description: "biba" },
+    { id: 1, title: "Aboba", description: "Biba" },
+    { id: 2, title: "Aboba", description: "Biba" },
+    { id: 3, title: "Aboba", description: "Biba" },
   ]);
 
   const [newNoteData] = useState<{

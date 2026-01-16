@@ -1,0 +1,20 @@
+.noteContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--c-surface);
+  min-width: 300px;
+  width: 70%;
+  border: var(--card-border);
+}
+
+.noteTitle {
+  font-size: var(--font-note-title);
+  font-weight: var(--font-weight-medium);
+}
+
+.noteDescription {
+  padding: 1rem;
+  padding-bottom: 0;
+}
