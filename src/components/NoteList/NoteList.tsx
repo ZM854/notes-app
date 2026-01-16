@@ -10,8 +10,8 @@ const NoteList = ({ notes }: NoteListProps) => {
 
   return (
     <div className={classes.notesList}>
-      {notes.map((note) => {
-        return <Note key={note.id} note={note} />;
+      {notes.map((note, index) => {
+        return <Note key={note.id} note={note} noteListNumber={index + 1} />;
       })}
     </div>
   );

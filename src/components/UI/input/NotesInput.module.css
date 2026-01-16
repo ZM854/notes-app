@@ -14,5 +14,5 @@
 }
 
 .notesInput::placeholder {
-  color: var(--c-on-primary);
+  color: var(--c-muted);
 }

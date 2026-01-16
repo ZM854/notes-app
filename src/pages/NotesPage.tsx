@@ -1,9 +1,9 @@
 import { useState } from "react";
 import NotesButton from "../components/UI/button/NotesButton";
-import NotesInput from "../components/UI/input/NotesInput";
 import { useAuth } from "../hooks/UseAuth";
 import type { NoteType } from "../types/NoteType";
 import NoteList from "../components/NoteList/NoteList";
+import NoteCreateForm from "../components/NoteCreateForm/NoteCreateForm";
 
 const NotesPage = () => {
   const { setIsAuth } = useAuth();
@@ -14,12 +14,13 @@ const NotesPage = () => {
     { id: 3, title: "Aboba", description: "Biba" },
   ]);
 
-  const [newNoteData] = useState<{
+  const [newNoteData, setNewNoteData] = useState<{
     title: string;
     description: string;
   }>({ title: "", description: "" });
 
-  const addNote = () => {
+  const addNote = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const newNote: NoteType = {
       id: Date.now(),
       title: newNoteData.title,
@@ -27,17 +28,21 @@ const NotesPage = () => {
     };
 
     setNotes([...notes, newNote]);
+    setNewNoteData({ title: "", description: "" });
+  };
+
+  const changeNewNoteData = (field: "title" | "description", value: string) => {
+    setNewNoteData((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
     <div>
       <NotesButton onClick={() => setIsAuth(false)}>Logout</NotesButton>
-
-      <form onSubmit={addNote}>
-        <NotesInput />
-        <NotesInput />
-        <NotesButton type="submit">Add note</NotesButton>
-      </form>
+      <NoteCreateForm
+        value={newNoteData}
+        onChange={changeNewNoteData}
+        onSubmit={addNote}
+      />
       <NoteList notes={notes} />
     </div>
   );
