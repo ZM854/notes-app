@@ -3,7 +3,7 @@ import NotesButton from "../components/UI/button/NotesButton";
 import { useAuth } from "../hooks/UseAuth";
 import type { NoteType } from "../types/NoteType";
 import NoteList from "../components/NoteList/NoteList";
-import NoteCreateForm from "../components/NoteCreateForm/NoteCreateForm";
+import NoteCreateModal from "../components/NoteCreateModal/NoteCreateModal";
 
 const NotesPage = () => {
   const { setIsAuth } = useAuth();
@@ -19,6 +19,8 @@ const NotesPage = () => {
     description: string;
   }>({ title: "", description: "" });
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const addNote = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newNote: NoteType = {
@@ -29,6 +31,7 @@ const NotesPage = () => {
 
     setNotes([...notes, newNote]);
     setNewNoteData({ title: "", description: "" });
+    setIsModalOpen(false);
   };
 
   const changeNewNoteData = (field: "title" | "description", value: string) => {
@@ -41,13 +44,18 @@ const NotesPage = () => {
       // need to remove inline styling later
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
+      <NotesButton onClick={() => setIsModalOpen(true)}>Add note</NotesButton>
+
       <NotesButton onClick={() => setIsAuth(false)}>Logout</NotesButton>
-      <NoteCreateForm
+      <NoteList notes={notes} />
+
+      <NoteCreateModal
         value={newNoteData}
         onChange={changeNewNoteData}
         onSubmit={addNote}
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
       />
-      <NoteList notes={notes} />
     </div>
   );
 };
