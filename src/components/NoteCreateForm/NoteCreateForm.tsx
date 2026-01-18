@@ -7,9 +7,16 @@ type NoteCreateFormProps = {
   onChange: (field: "title" | "description", value: string) => void;
 
   value: { title: string; description: string };
+
+  mode: "create" | "edit";
 };
 
-const NoteCreateForm = ({ onSubmit, onChange, value }: NoteCreateFormProps) => {
+const NoteCreateForm = ({
+  onSubmit,
+  onChange,
+  value,
+  mode,
+}: NoteCreateFormProps) => {
   return (
     <form className={classes.noteCreateForm} onSubmit={onSubmit}>
       <NotesInput
@@ -22,8 +29,9 @@ const NoteCreateForm = ({ onSubmit, onChange, value }: NoteCreateFormProps) => {
         onChange={(e) => onChange("description", e.target.value)}
         placeholder="description"
       />
+
       <NotesButton className={classes.formSubmitBtn} type="submit">
-        Add note
+        {mode === "create" ? "Add note" : "Save"}
       </NotesButton>
     </form>
   );

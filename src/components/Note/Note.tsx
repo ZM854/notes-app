@@ -6,9 +6,10 @@ type NoteProps = {
   noteListNumber: number;
 
   onDelete: (id: number) => void;
+  onEdit: (note: NoteType) => void;
 };
 
-const Note = ({ note, noteListNumber, onDelete }: NoteProps) => {
+const Note = ({ note, noteListNumber, onDelete, onEdit }: NoteProps) => {
   return (
     <div className={classes.noteContainer}>
       <div className={classes.noteInfo}>
@@ -18,7 +19,7 @@ const Note = ({ note, noteListNumber, onDelete }: NoteProps) => {
         <p className={classes.noteDescription}>{note.description}</p>
       </div>
       <div className={classes.noteControls}>
-        <NotesButton>Edit</NotesButton>
+        <NotesButton onClick={() => onEdit(note)}>Edit</NotesButton>
         <NotesButton onClick={() => onDelete(note.id)}>Delete</NotesButton>
       </div>
     </div>

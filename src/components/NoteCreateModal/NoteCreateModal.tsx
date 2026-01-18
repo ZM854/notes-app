@@ -9,6 +9,8 @@ type NoteCreateModalProps = {
 
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+
+  mode: "edit" | "create";
 };
 
 const NoteCreateModal = ({
@@ -17,6 +19,7 @@ const NoteCreateModal = ({
   value,
   isOpen,
   setIsOpen,
+  mode,
 }: NoteCreateModalProps) => {
   return (
     <div
@@ -24,7 +27,12 @@ const NoteCreateModal = ({
       className={clsx(classes.noteCreateModal, isOpen ? classes.active : "")}
     >
       <div onClick={(e) => e.stopPropagation()}>
-        <NoteCreateForm value={value} onChange={onChange} onSubmit={onSubmit} />
+        <NoteCreateForm
+          value={value}
+          onChange={onChange}
+          onSubmit={onSubmit}
+          mode={mode}
+        />
       </div>
     </div>
   );

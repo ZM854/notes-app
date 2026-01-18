@@ -21,44 +21,66 @@ const NotesPage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const addNote = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newNote: NoteType = {
-      id: Date.now(),
-      title: newNoteData.title,
-      description: newNoteData.description,
-    };
-
-    setNotes([...notes, newNote]);
-    setNewNoteData({ title: "", description: "" });
-    setIsModalOpen(false);
-  };
+  const [editingNoteId, setEditingNoteId] = useState<number | null>(null);
 
   const changeNewNoteData = (field: "title" | "description", value: string) => {
     setNewNoteData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const DeleteNote = (id: number) => {
+  const deleteNote = (id: number) => {
     setNotes((prev) => prev.filter((note) => note.id !== id));
   };
 
-  return (
-    <div
-      // temporary hack
-      // need to remove inline styling later
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
-      <NotesButton onClick={() => setIsModalOpen(true)}>Add note</NotesButton>
+  const openCreateModal = () => {
+    setNewNoteData({ title: "", description: "" });
+    setEditingNoteId(null);
+    setIsModalOpen(true);
+  };
 
-      <NotesButton onClick={() => setIsAuth(false)}>Logout</NotesButton>
-      <NoteList notes={notes} onDelete={DeleteNote} />
+  const openEditModal = (note: NoteType) => {
+    setNewNoteData({ title: note.title, description: note.description });
+    setEditingNoteId(note.id);
+    setIsModalOpen(true);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (editingNoteId === null) {
+      const newNote: NoteType = {
+        id: Date.now(),
+        ...newNoteData,
+      };
+
+      setNotes((prev) => [...prev, newNote]);
+    } else {
+      setNotes((prev) =>
+        prev.map((note) =>
+          note.id === editingNoteId ? { ...note, ...newNoteData } : note,
+        ),
+      );
+    }
+    setNewNoteData({ title: "", description: "" });
+    setEditingNoteId(null);
+    setIsModalOpen(false);
+  };
+
+  return (
+    <div>
+      <div>
+        <NotesButton onClick={openCreateModal}>Add note</NotesButton>
+        <NotesButton onClick={() => setIsAuth(false)}>Logout</NotesButton>
+      </div>
+
+      <NoteList notes={notes} onDelete={deleteNote} onEdit={openEditModal} />
 
       <NoteCreateModal
         value={newNoteData}
         onChange={changeNewNoteData}
-        onSubmit={addNote}
+        onSubmit={handleSubmit}
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
+        mode={editingNoteId ? "edit" : "create"}
       />
     </div>
   );
