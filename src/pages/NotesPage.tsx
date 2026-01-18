@@ -38,6 +38,10 @@ const NotesPage = () => {
     setNewNoteData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const DeleteNote = (id: number) => {
+    setNotes((prev) => prev.filter((note) => note.id !== id));
+  };
+
   return (
     <div
       // temporary hack
@@ -47,7 +51,7 @@ const NotesPage = () => {
       <NotesButton onClick={() => setIsModalOpen(true)}>Add note</NotesButton>
 
       <NotesButton onClick={() => setIsAuth(false)}>Logout</NotesButton>
-      <NoteList notes={notes} />
+      <NoteList notes={notes} onDelete={DeleteNote} />
 
       <NoteCreateModal
         value={newNoteData}

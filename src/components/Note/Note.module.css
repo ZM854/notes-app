@@ -1,12 +1,17 @@
 .noteContainer {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   padding: 1rem;
   border-radius: 0.5rem;
   background-color: var(--c-surface);
   min-width: 300px;
   width: 70%;
   border: var(--card-border);
+}
+
+.noteInfo {
+  display: flex;
+  flex-direction: column;
 }
 
 .noteTitle {
@@ -17,4 +22,21 @@
 .noteDescription {
   padding: 1rem;
   padding-bottom: 0;
+}
+
+.noteControls {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.noteControls::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -1rem;
+  height: 100%;
+  width: 3px;
+  background: var(--c-primary);
 }
