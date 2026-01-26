@@ -13,11 +13,17 @@ node_modules
 # Build
 dist
 dist-ssr
+frontend/dist
+backend/dist
 
 # Enviroment
 .env
 .env.*
 *.local
+
+#Database
+*.db
+*.db-journal
 
 # Editor directories and files
 .vscode/*
