@@ -6,6 +6,8 @@
     "rootDir": "src",
     "outDir": "dist",
 
+    "types": ["node"],
+
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
@@ -21,5 +23,6 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": ["prisma.config.ts"]
 }
