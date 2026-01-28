@@ -1,18 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NotesButton from "../components/UI/button/NotesButton";
 import { useAuth } from "../hooks/UseAuth";
 import type { NoteType } from "../types/NoteType";
 import NoteList from "../components/NoteList/NoteList";
 import NoteCreateModal from "../components/NoteCreateModal/NoteCreateModal";
+import NotesApi from "../API/NotesApi";
+import { useFetching } from "../hooks/UseFetching";
 
 const NotesPage = () => {
   const { setIsAuth } = useAuth();
 
-  const [notes, setNotes] = useState<NoteType[]>([
-    { id: 1, title: "Aboba", description: "Biba" },
-    { id: 2, title: "Aboba", description: "Biba" },
-    { id: 3, title: "Aboba", description: "Biba" },
-  ]);
+  const [notes, setNotes] = useState<NoteType[]>([]);
 
   const [newNoteData, setNewNoteData] = useState<{
     title: string;
@@ -22,6 +20,15 @@ const NotesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [editingNoteId, setEditingNoteId] = useState<number | null>(null);
+
+  const [fetchNotes] = useFetching(async (signal) => {
+    const response = await NotesApi.getAll(signal);
+    setNotes(response);
+  });
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   const changeNewNoteData = (field: "title" | "description", value: string) => {
     setNewNoteData((prev) => ({ ...prev, [field]: value }));
