@@ -24,7 +24,7 @@ backend/dist
 #Database
 *.db
 *.db-journal
-/src/generated/prisma
+**/src/generated/prisma/
 
 # Editor directories and files
 .vscode/*
