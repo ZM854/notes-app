@@ -21,21 +21,53 @@ const NotesPage = () => {
 
   const [editingNoteId, setEditingNoteId] = useState<number | null>(null);
 
+  const [deletingNoteId, setDeletingNoteId] = useState<number | null>(null);
+
   const [fetchNotes] = useFetching(async (signal) => {
     const response = await NotesApi.getAll(signal);
     setNotes(response);
   });
 
+  const [createNote] = useFetching(async (signal) => {
+    const response = await NotesApi.create(newNoteData, signal);
+    setNotes((prev) => [...prev, response]);
+  });
+
+  const [updateNote] = useFetching(async (signal) => {
+    if (!editingNoteId) {
+      return;
+    }
+
+    const updatedNote = await NotesApi.update(
+      editingNoteId,
+      newNoteData,
+      signal,
+    );
+
+    setNotes((prev) =>
+      prev.map((note) => (note.id === updatedNote.id ? updatedNote : note)),
+    );
+  });
+
+  const [deleteNote] = useFetching(async (signal) => {
+    if (deletingNoteId === null) return;
+    await NotesApi.delete(deletingNoteId, signal);
+    setNotes((prev) => prev.filter((note) => note.id !== deletingNoteId));
+    setDeletingNoteId(null);
+  });
+
   useEffect(() => {
     fetchNotes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const changeNewNoteData = (field: "title" | "description", value: string) => {
     setNewNoteData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const deleteNote = (id: number) => {
-    setNotes((prev) => prev.filter((note) => note.id !== id));
+  const handleDelete = (id: number) => {
+    setDeletingNoteId(id);
+    deleteNote();
   };
 
   const openCreateModal = () => {
@@ -50,23 +82,15 @@ const NotesPage = () => {
     setIsModalOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (editingNoteId === null) {
-      const newNote: NoteType = {
-        id: Date.now(),
-        ...newNoteData,
-      };
-
-      setNotes((prev) => [...prev, newNote]);
+      await createNote();
     } else {
-      setNotes((prev) =>
-        prev.map((note) =>
-          note.id === editingNoteId ? { ...note, ...newNoteData } : note,
-        ),
-      );
+      await updateNote();
     }
+
     setNewNoteData({ title: "", description: "" });
     setEditingNoteId(null);
     setIsModalOpen(false);
@@ -79,7 +103,7 @@ const NotesPage = () => {
         <NotesButton onClick={() => setIsAuth(false)}>Logout</NotesButton>
       </div>
 
-      <NoteList notes={notes} onDelete={deleteNote} onEdit={openEditModal} />
+      <NoteList notes={notes} onDelete={handleDelete} onEdit={openEditModal} />
 
       <NoteCreateModal
         value={newNoteData}
